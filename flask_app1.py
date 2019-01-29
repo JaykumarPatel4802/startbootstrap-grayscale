@@ -16,3 +16,8 @@ def search():
 def map():
     # found in ../templates/
     return render_template("map.html")
+
+@app.route('/login/', methods=['GET'])
+def login():
+    # found in ../templates/
+    return render_template("login.html")
