@@ -5,6 +5,27 @@ app = Flask(__name__)
 app.static_folder = 'static'
 app.config["DEBUG"] = True
 
+SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+    username="JaykumarPatel480",
+    password="MySQLDataBase",
+    hostname="JaykumarPatel4802.mysql.pythonanywhere-services.com",
+    databasename="JaykumarPatel480$TrackUrTransit",
+)
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class Comment(db.Model):
+
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(4096))
+
+comments = []
+
 @app.route('/', methods=['GET'])
 def main():
     # found in ../templates/
@@ -19,28 +40,3 @@ def search():
 def map():
     # found in ../templates/
     return render_template("map.html")
-
-@app.route('/login/', methods=['GET'])
-def login():
-    # found in ../templates/
-    return render_template("login.html")
-
-# @app.route('/subscribe', methods=['POST'])
-# def subscribe():
-#     # found in ../templates/
-#     email = request.form['inputEmail']
-#     with open('./subscribe.csv') as f:
-#         f.write(email + "\n")
-#     return render_template("login.html")
-
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{JaykumarPatel4802}:{MySQLDataBase}@{JaykumarPatel4802.mysql.pythonanywhere-services.com}/{TrackUrTransit}".format(
-    username="JaykumarPatel480",
-    password="MySQLDataBase",
-    hostname="JaykumarPatel4802.mysql.pythonanywhere-services.com",
-    databasename="TrackUrTransit",
-)
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
