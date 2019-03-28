@@ -33,6 +33,34 @@
             {
                 color: rgba(255, 255, 255, 0.8)
             }
+
+        #typeLocation, #clickLocation
+            {
+                padding: 10px;
+            }
+
+        #typeLocationRow, #clickLocationRow
+            {
+                height: 200px;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        @media (min-width: 992px){
+            #typeLocationImg
+            {
+                width: 100%;
+                height: 200px;
+            }
+
+            #clickLocationImg
+            {
+                width: 100%;
+                height: 200px;
+                margin-right: 0px;
+                margin-bottom: 0px;
+            }
+        }
     </style>
 
   </head>
@@ -68,7 +96,11 @@
       <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
           <h1 class="mx-auto my-0" id="main_heading"><strong>TrackUrTransit</strong></h1>
-          <h2 class="text-white-50 mx-auto mt-2 mb-5" id="main_heading_caption"><strong>Use Drive and never get lost! Discover new places and be adventurous!</strong></h2>
+          <br>
+          <br>
+          <br>
+          <br>
+          <!--<h2 class="text-white-50 mx-auto mt-2 mb-5" id="main_heading_caption"></h2>-->
           <a href="{{ url_for('map') }}" class="btn btn-primary js-scroll-trigger">Use Drive</a>
         </div>
       </div>
@@ -79,9 +111,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2 class="text-white mb-4">Built with Bootstrap 4</h2>
-            <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
-              <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+            <h2 class="text-white mb-4">What Is TrackUrTransit?</h2>
+            <p class="text-white-50">Welcome to TrackUrTransit, a navigation tool. Use this tool to get around a new place and track your transit.</p>
           </div>
         </div>
         <img src="img/map.png" class="img-fluid" alt="">
@@ -100,22 +131,25 @@
           <div class="col-xl-4 col-lg-5">
             <div class="featured-text text-center text-lg-left">
               <h4>Shoreline</h4>
-              <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+              <p class="text-black-50 mb-0">We have an interactive map to help YOU easily and conviently get around places.</p>
             </div>
           </div>
         </div>
 
+        <hr>
+        <br>
+
         <!-- Project One Row -->
-        <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+        <div class="row justify-content-center no-gutters mb-5 mb-lg-0" id="typeLocationRow">
           <div class="col-lg-6">
-            <img class="img-fluid" src="img/demo-image-01.jpg" alt="">
+            <img class="img-fluid" src="/static/img/typeLocation.png" id="typeLocationImg" alt="">
           </div>
           <div class="col-lg-6">
             <div class="bg-black text-center h-100 project">
               <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-left">
-                  <h4 class="text-white">Misty</h4>
-                  <p class="mb-0 text-white-50">An example of where you can put an image of a project, or anything else, along with a description.</p>
+                <div class="project-text w-100 my-auto text-center text-lg-left" id="typeLocation">
+                  <h4 class="text-white">Manually Type</h4>
+                  <p class="mb-0 text-white-50">You can manually type you starting location and destination!</p>
                   <hr class="d-none d-lg-block mb-0 ml-0">
                 </div>
               </div>
@@ -124,16 +158,16 @@
         </div>
 
         <!-- Project Two Row -->
-        <div class="row justify-content-center no-gutters">
+        <div class="row justify-content-center no-gutters" id="clickLocationRow">
           <div class="col-lg-6">
-            <img class="img-fluid" src="img/demo-image-02.jpg" alt="">
+            <img class="img-fluid" src="/static/img/clickLocation.png" id="clickLocationImg" alt="">
           </div>
           <div class="col-lg-6 order-lg-first">
             <div class="bg-black text-center h-100 project">
               <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-right">
-                  <h4 class="text-white">Mountains</h4>
-                  <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well, try this theme on a small screen!</p>
+                <div class="project-text w-100 my-auto text-center text-lg-right" id="clickLocation">
+                  <h4 class="text-white">Or Just Click!!</h4>
+                  <p class="mb-0 text-white-50">If you don't feel like typing, you can just click on the map to set starting location and destination!</p>
                   <hr class="d-none d-lg-block mb-0 mr-0">
                 </div>
               </div>
@@ -153,8 +187,8 @@
             <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
             <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
 
-            <form class="form-inline d-flex">
-              <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" placeholder="Enter email address...">
+            <form action="/subscribe" method="POST" class="form-inline d-flex">
+              <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" name="inputEmail" placeholder="Enter email address...">
               <button type="submit" class="btn btn-primary mx-auto">Subscribe</button>
             </form>
 
@@ -223,7 +257,7 @@
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
       <div class="container">
-        Copyright &copy; Your Website 2018
+        Copyright &copy; TrackUrTransit 2019
       </div>
     </footer>
 
