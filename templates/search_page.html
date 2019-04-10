@@ -8,26 +8,201 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Search</title>
+    <title>Drive</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="static/vendor/fontawesome-free/css/all.css" rel="stylesheet">
+    <link href="../static/vendor/fontawesome-free/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../static/css/grayscale.css" rel="stylesheet">
 
+
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        L.mapquest.key = 'oJhCcZn48h4cOW8pLgI4PWXoU0HQWtOg';
+
+        let map = L.mapquest.map('map', {
+          center: [40.7128, -74.0059],
+          layers: L.mapquest.tileLayer('map'),
+          zoom: 14,
+          zoomControl: false
+        });
+
+        let directionsControl = L.mapquest.directionsControl({
+          className: '',
+          directions: {
+            options: {
+              timeOverage: 25,
+              doReverseGeocode: false,
+            }
+          },
+          directionsLayer: {
+            startMarker: {
+              title: 'Drag to change location',
+              draggable: true,
+              icon: 'marker-start',
+              iconOptions: {
+                size: 'sm'
+              }
+            },
+            endMarker: {
+              draggable: true,
+              title: 'Drag to change location',
+              icon: 'marker-end',
+              iconOptions: {
+                size: 'sm'
+              }
+            },
+            viaMarker: {
+              title: 'Drag to change route'
+            },
+            routeRibbon: {
+              showTraffic: true
+            },
+            alternateRouteRibbon: {
+              showTraffic: true
+            },
+            paddingTopLeft: [450, 20],
+            paddingBottomRight: [180, 20],
+          },
+          startInput: {
+            compactResults: true,
+            disabled: false,
+            location: {},
+            placeholderText: 'Starting point or click on the map...',
+            geolocation: {
+              enabled: true
+            },
+            clearTitle: 'Remove starting point'
+          },
+          endInput: {
+            compactResults: true,
+            disabled: false,
+            location: {},
+            placeholderText: 'Destination',
+            geolocation: {
+              enabled: true
+            },
+            clearTitle: 'Remove this destination'
+          },
+          addDestinationButton: {
+            enabled: true,
+            maxLocations: 10,
+          },
+          routeTypeButtons: {
+            enabled: true,
+          },
+          reverseButton: {
+            enabled: true,
+          },
+          optionsButton: {
+            enabled: true,
+          },
+          routeSummary: {
+            enabled: true,
+            compactResults: false,
+          },
+          narrativeControl: {
+            enabled: true,
+            compactResults: false,
+            interactive: true,
+          }
+        }).addTo(map);
+
+        let customDirectionsControl = L.mapquest.directionsControl({
+          routeSummary: {
+            enabled: true,
+            compactResults: true,
+          },
+          narrativeControl: {
+            enabled: true,
+            compactResults: true,
+          },
+          directionsLayer: {
+            startMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#1fc715',
+                secondaryColor: '#1fc715',
+                symbol: 'A'
+              }
+            },
+            endMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#e9304f',
+                secondaryColor: '#e9304f',
+                symbol: 'B'
+              }
+            },
+            waypointMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#ffffff',
+                secondaryColor: '#ffffff',
+              }
+            },
+            routeRibbon: {
+              color: "#2aa6ce",
+              opacity: 1.0,
+              showTraffic: false
+            }
+          }
+        }).addTo(map);
+
+      }
+    </script>
+
     <style>
-        .navbar-brand {
-            padding: .5rem 0;
-            color: fade-out($white, .5);
-            color: $black;
-            font-weight: 700;
-            padding: .9rem 0;
+        #map_img
+            {
+                height: 200px;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        #main_heading, #main_heading_caption
+            {
+                color: rgba(255, 255, 255, 0.8)
+            }
+
+        #typeLocation, #clickLocation
+            {
+                padding: 10px;
+            }
+
+        #typeLocationRow, #clickLocationRow
+            {
+                height: 200px;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        @media (min-width: 992px){
+            #typeLocationImg
+            {
+                width: 100%;
+                height: 200px;
+            }
+
+            #clickLocationImg
+            {
+                width: 100%;
+                height: 200px;
+                margin-right: 0px;
+                margin-bottom: 0px;
+            }
         }
     </style>
 
@@ -38,8 +213,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand1 js-scroll-trigger" href="{{ url_for('main') }}">TrackUrTransit</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">TrackUrTransit</a>
+        <button href="{{ url_for('search') }}" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
         </button>
@@ -49,10 +224,13 @@
               <a class="nav-link js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#projects">Projects</a>
+              <a class="nav-link js-scroll-trigger" href="{{ url_for('search') }}">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="../map/">Map</a>
+              <a class="nav-link js-scroll-trigger" href="#projects">Tools</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#signup">Contact</a>
             </li>
           </ul>
         </div>
@@ -60,12 +238,17 @@
     </nav>
 
     <!-- Header -->
-    <header class="masthead">
+    <header class="masthead" style="background-image: url('/static/img/Roads.png')">
       <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-          <h1 class="mx-auto my-0">TrackUrTransit</h1>
+          <h1 class="mx-auto my-0" id="main_heading"><strong>TrackUrTransit</strong></h1>
           <h2 class="text-white-50 mx-auto mt-2 mb-5">Use Drive and never get lost! Discover new places and be adventurous!</h2>
-          <a href="{{ url_for('main') }}" class="btn btn-primary js-scroll-trigger">Home</a>
+          <br>
+          <br>
+          <br>
+          <br>
+          <!--<h2 class="text-white-50 mx-auto mt-2 mb-5" id="main_heading_caption"></h2>-->
+          <a href="{{ url_for('map') }}" class="btn btn-primary js-scroll-trigger">Use Drive</a>
         </div>
       </div>
     </header>
@@ -75,18 +258,19 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2 class="text-white mb-4">Built with Bootstrap 4</h2>
-            <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
-              <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+            <h2 class="text-white mb-4">What Is TrackUrTransit?</h2>
+            <p class="text-white-50">Welcome to TrackUrTransit, a navigation tool. Use this tool to get around a new place and track your transit.</p>
           </div>
         </div>
-        <img src="img/ipad.png" class="img-fluid" alt="">
+        <img src="img/map.png" class="img-fluid" alt="">
       </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section bg-light">
-      <div class="container">
+      <div id="map" class="container">
+      </div>
+    </section>
 
     <!-- Signup Section -->
     <section id="signup" class="signup-section">
@@ -97,8 +281,8 @@
             <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
             <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
 
-            <form class="form-inline d-flex">
-              <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" placeholder="Enter email address...">
+            <form action="/create_email" method="POST" class="form-inline d-flex">
+              <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" name="inputEmail" placeholder="Enter email address...">
               <button type="submit" class="btn btn-primary mx-auto">Subscribe</button>
             </form>
 
@@ -151,7 +335,13 @@
 
         <div class="social d-flex justify-content-center">
           <a href="#" class="mx-2">
-            Top
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="mx-2">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="mx-2">
+            <i class="fab fa-github"></i>
           </a>
         </div>
 
@@ -161,7 +351,7 @@
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
       <div class="container">
-        Copyright &copy; Your Website 2018
+        Copyright &copy; TrackUrTransit 2019
       </div>
     </footer>
 

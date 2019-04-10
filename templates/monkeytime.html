@@ -11,15 +11,158 @@
     <title>Drive</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="static/vendor/fontawesome-free/css/all.css" rel="stylesheet">
+    <link href="../static/vendor/fontawesome-free/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/grayscale.css" rel="stylesheet">
+    <link href="../static/css/grayscale.css" rel="stylesheet">
+
+
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+
+    <script type="text/javascript">
+      window.onload = function() {
+        L.mapquest.key = 'oJhCcZn48h4cOW8pLgI4PWXoU0HQWtOg';
+
+        let map = L.mapquest.map('map', {
+          center: [40.7128, -74.0059],
+          layers: L.mapquest.tileLayer('map'),
+          zoom: 14,
+          zoomControl: false
+        });
+
+        let directionsControl = L.mapquest.directionsControl({
+          className: '',
+          directions: {
+            options: {
+              timeOverage: 25,
+              doReverseGeocode: false,
+            }
+          },
+          directionsLayer: {
+            startMarker: {
+              title: 'Drag to change location',
+              draggable: true,
+              icon: 'marker-start',
+              iconOptions: {
+                size: 'sm'
+              }
+            },
+            endMarker: {
+              draggable: true,
+              title: 'Drag to change location',
+              icon: 'marker-end',
+              iconOptions: {
+                size: 'sm'
+              }
+            },
+            viaMarker: {
+              title: 'Drag to change route'
+            },
+            routeRibbon: {
+              showTraffic: true
+            },
+            alternateRouteRibbon: {
+              showTraffic: true
+            },
+            paddingTopLeft: [450, 20],
+            paddingBottomRight: [180, 20],
+          },
+          startInput: {
+            compactResults: true,
+            disabled: false,
+            location: {},
+            placeholderText: 'Starting point or click on the map...',
+            geolocation: {
+              enabled: true
+            },
+            clearTitle: 'Remove starting point'
+          },
+          endInput: {
+            compactResults: true,
+            disabled: false,
+            location: {},
+            placeholderText: 'Destination',
+            geolocation: {
+              enabled: true
+            },
+            clearTitle: 'Remove this destination'
+          },
+          addDestinationButton: {
+            enabled: true,
+            maxLocations: 10,
+          },
+          routeTypeButtons: {
+            enabled: true,
+          },
+          reverseButton: {
+            enabled: true,
+          },
+          optionsButton: {
+            enabled: true,
+          },
+          routeSummary: {
+            enabled: true,
+            compactResults: false,
+          },
+          narrativeControl: {
+            enabled: true,
+            compactResults: false,
+            interactive: true,
+          }
+        }).addTo(map);
+
+        let customDirectionsControl = L.mapquest.directionsControl({
+          routeSummary: {
+            enabled: true,
+            compactResults: true,
+          },
+          narrativeControl: {
+            enabled: true,
+            compactResults: true,
+          },
+          directionsLayer: {
+            startMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#1fc715',
+                secondaryColor: '#1fc715',
+                symbol: 'A'
+              }
+            },
+            endMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#e9304f',
+                secondaryColor: '#e9304f',
+                symbol: 'B'
+              }
+            },
+            waypointMarker: {
+              icon: 'circle',
+              iconOptions: {
+                size: 'sm',
+                primaryColor: '#ffffff',
+                secondaryColor: '#ffffff',
+              }
+            },
+            routeRibbon: {
+              color: "#2aa6ce",
+              opacity: 1.0,
+              showTraffic: false
+            }
+          }
+        }).addTo(map);
+
+      }
+    </script>
 
     <style>
         #map_img
@@ -125,60 +268,7 @@
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section bg-light">
-      <div class="container">
-
-        <!-- Featured Project Row -->
-        <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-          <div class="col-xl-8 col-lg-7">
-            <img class="img-fluid mb-3 mb-lg-0" id="map_img" src="/static/img/Map.PNG" alt="">
-          </div>
-          <div class="col-xl-4 col-lg-5">
-            <div class="featured-text text-center text-lg-left">
-              <h4>Map</h4>
-              <p class="text-black-50 mb-0">We have an interactive map to help YOU easily and conviently get around places.</p>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-        <br>
-
-        <!-- Project One Row -->
-        <div class="row justify-content-center no-gutters mb-5 mb-lg-0" id="typeLocationRow">
-          <div class="col-lg-6">
-            <img class="img-fluid" src="/static/img/typeLocation.png" id="typeLocationImg" alt="">
-          </div>
-          <div class="col-lg-6">
-            <div class="bg-black text-center h-100 project">
-              <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-left" id="typeLocation">
-                  <h4 class="text-white">Manually Type</h4>
-                  <p class="mb-0 text-white-50">You can manually type you starting location and destination!</p>
-                  <hr class="d-none d-lg-block mb-0 ml-0">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project Two Row -->
-        <div class="row justify-content-center no-gutters" id="clickLocationRow">
-          <div class="col-lg-6">
-            <img class="img-fluid" src="/static/img/clickLocation.png" id="clickLocationImg" alt="">
-          </div>
-          <div class="col-lg-6 order-lg-first">
-            <div class="bg-black text-center h-100 project">
-              <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-right" id="clickLocation">
-                  <h4 class="text-white">Or Just Click!!</h4>
-                  <p class="mb-0 text-white-50">If you don't feel like typing, you can just click on the map to set starting location and destination!</p>
-                  <hr class="d-none d-lg-block mb-0 mr-0">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div id="map" class="container">
       </div>
     </section>
 
@@ -191,13 +281,10 @@
             <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
             <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
 
-            <form action="/create_email" method="POST" class="form-inline d-flex">
+            <form action="/subscribe" method="POST" class="form-inline d-flex">
               <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" name="inputEmail" placeholder="Enter email address...">
               <button type="submit" class="btn btn-primary mx-auto">Subscribe</button>
             </form>
-            <div>
-                {{ comment.content }}
-            </div>
 
           </div>
         </div>
@@ -269,14 +356,14 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="static/js/grayscale.min.js"></script>
+    <script src="../static/js/grayscale.min.js"></script>
 
   </body>
 
